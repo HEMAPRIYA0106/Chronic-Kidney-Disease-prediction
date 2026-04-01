@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import joblib
 import numpy as np
-from history import PredictionHistory   # import like Java class
+from history import PredictionHistory   
 
 app   = Flask(__name__)
 CORS(app)
@@ -11,7 +11,7 @@ model   = joblib.load("kidney_model.pkl")
 imputer = joblib.load("imputer.pkl")
 scaler  = joblib.load("scaler.pkl")
 
-ph = PredictionHistory()   # one shared instance
+ph = PredictionHistory()   
 
 
 # ── Serve UI ──────────────────────────────────────────────────────────────────
