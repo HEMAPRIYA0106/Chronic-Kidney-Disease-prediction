@@ -238,6 +238,7 @@
   <div class="nav-links">
     <button class="nav-btn active" id="navForm"    onclick="goTo('form')">Predict</button>
     <button class="nav-btn"        id="navHistory" onclick="goTo('history'); loadHistory();">History</button>
+    <button class="nav-btn" id="logoutBtn" onclick="doLogout()" style="color:#dc2626;">Logout</button>
   </div>
 </nav>
 
@@ -812,6 +813,10 @@
     await fetch(`/history/${id}`, { method: 'DELETE' });
     allHistory = allHistory.filter(r => r.id !== id);
     renderHistory(allHistory);
+  }
+  async function doLogout() {
+    await fetch('/logout', { method: 'POST' });
+    window.location.href = '/login';
   }
 </script>
 </body>
