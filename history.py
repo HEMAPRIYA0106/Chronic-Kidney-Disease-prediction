@@ -8,12 +8,14 @@ class PredictionHistory:
         self.next_id = 1
 
     # Add
-    def add_record(self, features, prediction):
+    def add_record(self, features, prediction, patient_name="Unknown", patient_id="N/A"):
         record = {
-            "id":         self.next_id,
-            "timestamp":  datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
-            "prediction": prediction,
-            "result":     "CKD Detected" if prediction == 1 else "No CKD",
+            "id":           self.next_id,
+            "timestamp":    datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+            "prediction":   prediction,
+            "result":       "CKD Detected" if prediction == 1 else "No CKD",
+            "patient_name": patient_name,
+            "patient_id":   patient_id,
             "age":   features[0],  "bp":    features[1],
             "sg":    features[2],  "al":    features[3],
             "su":    features[4],  "bgr":   features[5],
@@ -53,24 +55,24 @@ class PredictionHistory:
         self.history = [r for r in self.history if r["id"] != id]
         return len(self.history) < before
 
-    # Clear all 
+    # Clear all
     def clear_all(self):
         self.history.clear()
         self.next_id = 1
 
-    # Total number of predictions stored 
+    # Total number of predictions stored
     def size(self):
         return len(self.history)
 
-    # CKD count 
+    # CKD count
     def ckd_count(self):
         return sum(1 for r in self.history if r["prediction"] == 1)
 
-    # Non-CKD count 
+    # Non-CKD count
     def non_ckd_count(self):
         return sum(1 for r in self.history if r["prediction"] == 0)
 
-    # Stats (all counts in one call) 
+    # Stats (all counts in one call)
     def get_stats(self):
         return {
             "total":   self.size(),
